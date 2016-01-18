@@ -1,19 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  currentStudent() {
-    if (this.currentStudentIdx === undefined) {
-      students[0];
-    } else {
-      students[this.currentStudentIdx];
-    }
-  },
-  setCurrentStudentIdx(studentIdx) {
-    this.currentStudentIdx = studentIdx;
-  },
+  currentStudent: Ember.computed('students', 'currentStudentIdx', function() {
+    var students = this.get('students');
+    var idx = this.get('currentStudentIdx');
+
+    return { student: students[idx], index: idx }
+  }),
+  currentStudentIdx: 0,
   actions: {
     nextStudent() {
-        students[this.currentStudent++];
-      }
+      this.incrementProperty('currentStudentIdx');
+    }
   }
 });
